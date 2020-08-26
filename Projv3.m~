@@ -87,8 +87,11 @@ X_test_norm = (X_test - mu_X_train)./sigma_X_train;
 
 LDA_Accuracy_test = length(find(Y_test ==Y_fit_LDA))/length(Y_test)
 
+%{
+% Confusion Chart
 figure
 confLDA = confusionchart(Y_test,Y_fit_LDA);
+%}
 
 % Part 1-b) Training a QDA Model
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -104,10 +107,11 @@ confLDA = confusionchart(Y_test,Y_fit_LDA);
 
 QDA_Accuracy_test = length(find(Y_test ==Y_fit_QDA))/length(Y_test)
 
+%{
+% Confusion Chart
 figure
 confQDA = confusionchart(Y_test,Y_fit_QDA)
-
-
+%}
 
 % Part 1-c) Training a GNB Model
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -124,10 +128,11 @@ confQDA = confusionchart(Y_test,Y_fit_QDA)
 
 GNB_Accuracy_test = length(find(Y_test ==Y_fit_GNB))/length(Y_test)
 
-
+%{
+% Confusion Chart
 figure
 confGNB = confusionchart(Y_test,Y_fit_GNB)
-
+%}
 
 % Part 1-d) Training a Logistic Model
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -143,9 +148,11 @@ confGNB = confusionchart(Y_test,Y_fit_GNB)
 
 Logistic_Accuracy_test = length(find(Y_test == Y_fit_Logistic))/length(Y_test)
 
+%{
+% Confusion Chart
 figure
 confLogistic = confusionchart(Y_test,Y_fit_Logistic)
-
+%}
 
 
 % Part 1-e) Training a Linear SVM Model
@@ -163,10 +170,11 @@ confLogistic = confusionchart(Y_test,Y_fit_Logistic)
 
 Linear_SVM_Accuracy_test = length(find(Y_test == Y_fit_Linear_SVM))/length(Y_test)
 
+%{
+% Confusion Chart
 figure
 conf_LinearSVM = confusionchart(Y_test,Y_fit_Linear_SVM)
-
-
+%}
 
 
 % Part 1-f) Training a Quadratic SVM Model
@@ -184,30 +192,52 @@ conf_LinearSVM = confusionchart(Y_test,Y_fit_Linear_SVM)
 
 Quadratic_SVM_Accuracy_test = length(find(Y_test == Y_fit_Quadratic_SVM))/length(Y_test)
 
-
+% Confusion Chart
+%{
 figure
 confLinearSVM = confusionchart(Y_test,Y_fit_Quadratic_SVM)
+%}
 
 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Comapiring Results with all 30 features
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-%-----------------------------------------------------------------------
-%[X,Y,T,AUC] = perfcurve(double(Y_test),double(Y_fit_Quadratic_SVM),1)
-%-----------------------------------------------------------------------
-
+% Compairing Accuracy
 Accuracy_Training = [LDA_Accuracy,QDA_Accuracy,GNB_Accuracy, Logistic_Accuracy,Linear_SVM_Accuracy,Quadratic_SVM_Accuracy]
-Accuracy_Testing =
+Accuracy_Testing = [LDA_Accuracy_test, QDA_Accuracy_test, GNB_Accuracy_test, Logistic_Accuracy_test, Linear_SVM_Accuracy_test, Quadratic_SVM_Accuracy_test]
 
-
-
+% Compairing Area Under the Curve
 AUC2_Training_data = [AUC2_LDA, AUC2_QDA, AUC2_GNB, AUC2_Logistic, AUC2_Linear_SVM, AUC2_Quadratic_SVM]
 AUC1_Testing_data = [AUC1_LDA, AUC1_QDA, AUC1_GNB, AUC1_Logistic, AUC1_Linear_SVM, AUC1_Quadratic_SVM]
 
-%}
-%}
-%}
-%}
-%}
 
+%}
+%}
+%}
+%}
+%}
+[idx,scores] = fscchi2(X_train_norm,Y_train);
+
+tree=fitctree(X_train_norm,Y_train);
+
+
+view(tree,'Mode','graph');
+
+
+
+imp=predictorImportance(tree);
+[r,ind_imp]=sort(imp, 'descend');
+index_zero=find(imp==0);
+
+
+
+data_train =[Y_train, X_train_norm];
+Y_pred_tree=predict(tree, X_test_norm);
+confusionchart(Y_test, Y_pred_tree);
+C=confusionmat(Y_test,Y_pred_tree);
+%Accuracy=(TN+TP)/(TN+TP+FN+FP)
+accuracy_ctree=(C(1,1)+C(2,2))/length(Y_test);
 
 
 

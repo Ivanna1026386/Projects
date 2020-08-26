@@ -124,6 +124,8 @@ for i = 1:length(nfs)
    Mdl = fitcdiscr(X_train_norm(:,fs), Y_train,'DiscrimType','Quadratic');
    label = predict(Mdl,X_train_norm(:,fs));
    QDA_Misclassification(:,i)= sum(~strcmp(Y_train, label))/length(Y_fit_QDA_train); % Resubs error
+   cvmodel = crossval(Mdl,'kfold',5);
+   cverror(:,i) = kfoldLoss(cvmodel);
    
    
    label2 = predict(Mdl,X_test_norm(:,fs));
@@ -138,7 +140,6 @@ figure
 plot(1:length(nfs),QDA_Misclassification)
 hold on
 plot(1:length(nfs),QDA_Misclassification_testingdata)
-xlabel('Number of Features');
-ylabel('MCE')
-legend({'MCE on the training set' 'MCE on the test set'});
-title('Misclassification  - Training and Testing data')
+hold on
+plot(1:length(nfs), cverror)
+legend
