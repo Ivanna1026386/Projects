@@ -118,12 +118,13 @@ sum(~strcmp(Y_fit_QDA_train, label))
 
 [h,p,ci,stat] = ttest2(X_M,X_B,'Vartype','unequal');
 [ZZZZZ,featureIdxSortbyP] = sort(p,2);
+
 nfs = 1:1:30
 for i = 1:length(nfs)
    fs = featureIdxSortbyP(1:nfs(i));
    Mdl = fitcdiscr(X_train_norm(:,fs), Y_train,'DiscrimType','Quadratic');
    label = predict(Mdl,X_train_norm(:,fs));
-   QDA_Misclassification(:,i)= sum(~strcmp(Y_train, label))/length(Y_fit_QDA_train); % Resubs error
+   QDA_Misclassification(:,i)= sum(~strcmp(Y_train, label))/length(Y_train); % Resubs error
    
    
    label2 = predict(Mdl,X_test_norm(:,fs));
@@ -142,3 +143,67 @@ xlabel('Number of Features');
 ylabel('MCE')
 legend({'MCE on the training set' 'MCE on the test set'});
 title('Misclassification  - Training and Testing data')
+hold off
+
+
+ZZ = heatmap(corr(X_train_norm))
+
+
+tenfoldCVP = cvpartition(Y_train,'kfold',10)
+
+fun = @(XT,yT,Xt,yt)loss(fitcdiscr(XT,yT,'DiscrimType','Quadratic'),Xt,yt)
+opts = statset('Display','iter');
+[fsLocal, history] = sequentialfs(fun,X_train_norm,Y_train,'cv',tenfoldCVP,'options',opts)
+
+
+X_train_norm(:,fsLocal)
+
+Mdl1 = fitcdiscr(X_train_norm(:,fsLocal), Y_train,'DiscrimType','Quadratic');
+label1 = predict(Mdl1,X_test_norm(:,fsLocal));
+QDA_Misclassification1= sum(strcmp(Y_test, label1))/length(Y_test); % Resubs error
+
+fs1 = featureIdxSortbyP(1:30)
+
+[fsCVfor30,historyCV] = sequentialfs(fun,X_train_norm,Y_train,...
+    'cv',tenfoldCVP,'Nf',30);
+plot(historyCV.Crit,'o');
+xlabel('Number of Features');
+ylabel('CV MCE');
+title('Forward Sequential Feature Selection with cross-validation');
+
+
+
+
+holdoutCVP = cvpartition(Y_train,'holdout',0.2)
+resubCVP = cvpartition(length(Y_train),'resubstitution')
+classf = @(xtrain,ytrain,xtest,ytest) ...
+             sum(~strcmp(ytest,classify(xtest,xtrain,ytrain,'quadratic')));
+
+for i = 1:length(nfs)
+   fs = featureIdxSortbyP(1:nfs(i));
+  testMCE(i) = crossval(classf,X_train_norm(:,fs),Y_train,'partition',holdoutCVP)...
+       /holdoutCVP.TestSize;
+   
+   
+   resubMCE(i) = crossval(classf,X_train_norm(:,fs),Y_train,'partition',resubCVP)/...
+       resubCVP.TestSize;
+   
+end
+
+ plot(nfs, testMCE,'o',nfs,resubMCE,'r^');
+ xlabel('Number of Features');
+ ylabel('MCE');
+ legend({'MCE on the test set' 'Resubstitution MCE'},'location','NW');
+ title('Simple Filter Feature Selection Method');
+
+
+
+
+
+
+
+
+
+
+
+
