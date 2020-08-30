@@ -197,11 +197,45 @@ end
  title('Simple Filter Feature Selection Method');
 
 
+ %Hyper parameter Optimization
+ %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+hypopts = struct('ShowPlots',false,'Verbose',0) %,'UseParallel',true);
+
+mdls_SVM_opt = fitcsvm(X_train_norm,Y_train,'KernelFunction','polynomial','Standardize','on', ...
+    'OptimizeHyperparameters','auto','HyperparameterOptimizationOptions', hypopts);
+results_SVM_opt = mdls_SVM_opt.HyperparameterOptimizationResults;
 
 
+mdls_tree_opt = fitctree(X_train_norm,Y_train, ...
+    'OptimizeHyperparameters','auto','HyperparameterOptimizationOptions', hypopts);
+results_tree_opt = mdls_tree_opt.HyperparameterOptimizationResults;
 
 
+figure
+plot(results_SVM_opt.ObjectiveMinimumTrace,'Marker','o','MarkerSize',5);
+hold on
+plot(results_tree_opt.ObjectiveMinimumTrace,'Marker','o','MarkerSize',5);
+names = {'SVM-Polynomial','Decision Tree'};
+legend(names,'Location','northeast')
+title('Bayesian Optimization')
+xlabel('Number of Iterations')
+ylabel('Minimum Objective Value')
 
+% Checking it on Testing Data
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+[label_SVM_opt,score_SVM_opt] = predict(mdls_SVM_opt,X_test_norm);
+
+[label_tree_opt,score_tree_opt] = predict(mdls_tree_opt,X_test_norm);
+
+
+figure
+subplot(1,2,1)
+c_svm_opt = confusionchart(Y_test,label_SVM_opt);
+title(names{1})
+subplot(1,2,2)
+c_tree_opt = confusionchart(Y_test,label_tree_opt);
+title(names{2})
 
 
 

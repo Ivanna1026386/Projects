@@ -14,6 +14,8 @@ if permute == true
     ind_train1 = randperm(n,train_size);
     ind_test = (setdiff(randperm(n),ind_train1));
     
+    
+    
     X_testSample = X_sample(ind_test,:);
     X_trainSample = X_sample(ind_train1,:);
     
