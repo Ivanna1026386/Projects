@@ -1,11 +1,16 @@
 %{
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-Assignment 8 - AEML
+AEML - Course Project
 Submitted by -
  - Vivek Bhargava (01/1025699)
  - Ivanna Savonik (01/1026386)
 
 No. of functions used -
+- We have used a total of 23 functions and their .m scripts are attached
+  in the main folder 
+- The main program file is named as main.m file
+- The main data csv file is called wdbc.csv and is attachecd in the main
+ folder
 
 Other details -
 
@@ -25,24 +30,9 @@ Other details -
     Number of Attributes - 30
     -------------------------
 
-Classification Lasso
-
-LDA
-QDA
-Logistic Reg
-KNN
-GNB
-SVM
-
-Model Validation - 
-1. ROC - curves
-2. Error - 0-1 loss error
-
-Random - forest 
-
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %}
-
+fprintf('\n******************** LOADING DATA ********************')
 clear all;
 close all;
 clc
@@ -81,6 +71,7 @@ X_test_norm = (X_test - mu_X_train)./sigma_X_train;
 % is to gauge the accuracy of various models for our dataset
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+fprintf('\n***************** Running Part 1 *****************')
 
 % Part 1-a) Training a LDA Model
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -94,7 +85,7 @@ X_test_norm = (X_test - mu_X_train)./sigma_X_train;
 [Y_fit_LDA,score_LDA] = LDAtrainedClassifier.predictFcn(X_test_norm);
 [X1_LDA,Y1_LDA,T1_LDA,AUC1_LDA] = perfcurve(Y_test,score_LDA(:,2),'M');
 
-LDA_Accuracy_test = sum(strcmp(Y_test, Y_fit_LDA))/length(Y_test)
+LDA_Accuracy_test = sum(strcmp(Y_test, Y_fit_LDA))/length(Y_test);
 %
 %{
 % Confusion Chart
@@ -114,7 +105,7 @@ confLDA = confusionchart(Y_test,Y_fit_LDA);
 [Y_fit_QDA,score_QDA] = QDAtrainedClassifier.predictFcn(X_test_norm);
 [X1_QDA,Y1_QDA,T1_QDA,AUC1_QDA] = perfcurve(Y_test,score_QDA(:,2),'M');
 
-QDA_Accuracy_test = sum(strcmp(Y_test, Y_fit_QDA))/length(Y_test)
+QDA_Accuracy_test = sum(strcmp(Y_test, Y_fit_QDA))/length(Y_test);
 
 %{
 % Confusion Chart
@@ -135,7 +126,7 @@ confQDA = confusionchart(Y_test,Y_fit_QDA)
 [Y_fit_GNB,score_GNB]= GNBtrainedClassifier.predictFcn(X_test_norm);
 [X1_GNB,Y1_GNB,T1_GNB,AUC1_GNB] = perfcurve(Y_test,score_GNB(:,2),'M');
 
-GNB_Accuracy_test = sum(strcmp(Y_test, Y_fit_GNB))/length(Y_test)
+GNB_Accuracy_test = sum(strcmp(Y_test, Y_fit_GNB))/length(Y_test);
 
 %{
 % Confusion Chart
@@ -155,7 +146,7 @@ confGNB = confusionchart(Y_test,Y_fit_GNB)
 [Y_fit_Logistic,score_Logistic] = LogistictrainedClassifier.predictFcn(X_test_norm);
 [X1_Logistic,Y1_Logistic,T1_Logistic,AUC1_Logistic] = perfcurve(Y_test,score_Logistic(:,2),'M');
 
-Logistic_Accuracy_test = sum(strcmp(Y_test, Y_fit_Logistic))/length(Y_test)
+Logistic_Accuracy_test = sum(strcmp(Y_test, Y_fit_Logistic))/length(Y_test);
 
 %{
 % Confusion Chart
@@ -177,7 +168,7 @@ confLogistic = confusionchart(Y_test,Y_fit_Logistic)
 [Y_fit_Linear_SVM, score_Linear_SVM] = Linear_SVMtrainedClassifier.predictFcn(X_test_norm);
 [X1_Linear_SVM,Y1_Linear_SVM,T1_Linear_SVM,AUC1_Linear_SVM] = perfcurve(Y_test,score_Linear_SVM(:,2),'M');
 
-Linear_SVM_Accuracy_test = sum(strcmp(Y_test, Y_fit_Linear_SVM))/length(Y_test)
+Linear_SVM_Accuracy_test = sum(strcmp(Y_test, Y_fit_Linear_SVM))/length(Y_test);
 
 
 
@@ -201,7 +192,7 @@ conf_LinearSVM = confusionchart(Y_test,Y_fit_Linear_SVM)
 [Y_fit_Quadratic_SVM,score_Quadratic_SVM] = Linear_SVMtrainedClassifier.predictFcn(X_test_norm);
 [X1_Quadratic_SVM,Y1_Quadratic_SVM,T1_Quadratic_SVM,AUC1_Quadratic_SVM] = perfcurve(Y_test,score_Quadratic_SVM(:,2),'M');
 
-Quadratic_SVM_Accuracy_test = sum(strcmp(Y_test, Y_fit_Quadratic_SVM))/length(Y_test)
+Quadratic_SVM_Accuracy_test = sum(strcmp(Y_test, Y_fit_Quadratic_SVM))/length(Y_test);
 
 % Confusion Chart
 %{
@@ -223,7 +214,7 @@ confLinearSVM = confusionchart(Y_test,Y_fit_Quadratic_SVM)
 [Y_fit_Gaussian_SVM,score_Gaussian_SVM] = Gaussian_SVM_trainedClassifier.predictFcn(X_test_norm);
 [X1_Gaussian_SVM,Y1_Gaussian_SVM,T1_Gaussian_SVM,AUC1_Gaussian_SVM] = perfcurve(Y_test,score_Gaussian_SVM(:,2),'M');
 
-Gaussian_SVM_Accuracy_test = sum(strcmp(Y_test, Y_fit_Gaussian_SVM))/length(Y_test)
+Gaussian_SVM_Accuracy_test = sum(strcmp(Y_test, Y_fit_Gaussian_SVM))/length(Y_test);
 
 
 
@@ -244,7 +235,7 @@ Gaussian_SVM_Accuracy_test = sum(strcmp(Y_test, Y_fit_Gaussian_SVM))/length(Y_te
 [Y_fit_Ctree,score_Ctree]= CTreetrainedClassifier.predictFcn(X_test_norm);
 [X1_Ctree,Y1_Ctree,T1_Ctree,AUC1_Ctree] = perfcurve(Y_test,score_Ctree(:,2),'M');
 
-Ctree_Accuracy_test = sum(strcmp(Y_test, Y_fit_Ctree))/length(Y_test)
+Ctree_Accuracy_test = sum(strcmp(Y_test, Y_fit_Ctree))/length(Y_test);
 
 view(CTreetrainedClassifier.ClassificationTree,'Mode','graph')
 
@@ -263,7 +254,7 @@ view(CTreetrainedClassifier.ClassificationTree,'Mode','graph')
 [Y_fit_RForest,score_RForest]= RForest_trainedClassifier.predictFcn(X_test_norm);
 [X1_RForest,Y1_RForest,T1_RForest,AUC1_RForest] = perfcurve(Y_test,score_RForest(:,2),'M');
 
-RForest_Accuracy_test = sum(strcmp(Y_test, Y_fit_RForest))/length(Y_test)
+RForest_Accuracy_test = sum(strcmp(Y_test, Y_fit_RForest))/length(Y_test);
 
 
 
@@ -272,21 +263,21 @@ RForest_Accuracy_test = sum(strcmp(Y_test, Y_fit_RForest))/length(Y_test)
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Comapiring Results with all 30 features
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-Model_names= {'LDA', 'QDA', 'GNB', 'Logistic', 'Linear SVM', 'Quadratic SVM','Gaussian SVM','Ctree','RForest'}
+Model_names= {'LDA', 'QDA', 'GNB', 'Logistic', 'Linear SVM', 'Quadratic SVM','Gaussian SVM','Ctree','RForest'};
 
 % Compairing Accuracy
-Accuracy_Training = [LDA_Accuracy,QDA_Accuracy,GNB_Accuracy, Logistic_Accuracy,Linear_SVM_Accuracy,Quadratic_SVM_Accuracy,Gaussian_SVM_Accuracy,CTreeAccuracy,RForest_Accuracy]
-Accuracy_Testing = [LDA_Accuracy_test, QDA_Accuracy_test, GNB_Accuracy_test, Logistic_Accuracy_test, Linear_SVM_Accuracy_test, Quadratic_SVM_Accuracy_test,Gaussian_SVM_Accuracy_test,Ctree_Accuracy_test,RForest_Accuracy_test]
+Accuracy_Training = [LDA_Accuracy,QDA_Accuracy,GNB_Accuracy, Logistic_Accuracy,Linear_SVM_Accuracy,Quadratic_SVM_Accuracy,Gaussian_SVM_Accuracy,CTreeAccuracy,RForest_Accuracy];
+Accuracy_Testing = [LDA_Accuracy_test, QDA_Accuracy_test, GNB_Accuracy_test, Logistic_Accuracy_test, Linear_SVM_Accuracy_test, Quadratic_SVM_Accuracy_test,Gaussian_SVM_Accuracy_test,Ctree_Accuracy_test,RForest_Accuracy_test];
 
-Table_Accuracy = [Accuracy_Training; Accuracy_Testing]
+Table_Accuracy = [Accuracy_Training; Accuracy_Testing];
 Table1 = array2table(Table_Accuracy,'VariableNames',Model_names,'RowNames',{'Training Data','Testing Data'})
 
 % Compairing Area Under the Curve
-AUC2_Training_data = [AUC2_LDA, AUC2_QDA, AUC2_GNB, AUC2_Logistic, AUC2_Linear_SVM, AUC2_Quadratic_SVM,AUC2_Gaussian_SVM,AUC2_Ctree,AUC2_RForest]
-AUC1_Testing_data = [AUC1_LDA, AUC1_QDA, AUC1_GNB, AUC1_Logistic, AUC1_Linear_SVM, AUC1_Quadratic_SVM,AUC1_Gaussian_SVM,AUC1_Ctree,AUC1_RForest]
+AUC2_Training_data = [AUC2_LDA, AUC2_QDA, AUC2_GNB, AUC2_Logistic, AUC2_Linear_SVM, AUC2_Quadratic_SVM,AUC2_Gaussian_SVM,AUC2_Ctree,AUC2_RForest];
+AUC1_Testing_data = [AUC1_LDA, AUC1_QDA, AUC1_GNB, AUC1_Logistic, AUC1_Linear_SVM, AUC1_Quadratic_SVM,AUC1_Gaussian_SVM,AUC1_Ctree,AUC1_RForest];
 
 
-Area_Under_Curve_Table = [AUC2_Training_data;AUC1_Testing_data]
+Area_Under_Curve_Table = [AUC2_Training_data;AUC1_Testing_data];
 Table2 = array2table(Area_Under_Curve_Table,'VariableNames',Model_names,'RowNames',{'Training Data','Testing Data'})
 
 % Plotting for Accuracy - for Training Data
@@ -324,7 +315,7 @@ xtickangle(45)
 % on Forward subset selection 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
+fprintf('\n******************** Running Part 2 ********************')
 % Part 2-1 - Filtering - Evaluating feature using p-values
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 [h,p,ci,stat] = ttest2(X_M,X_B,'Vartype','unequal');
@@ -366,12 +357,12 @@ hold off
 
 
 
-% Part 2-2a)  Forward Subset Selection - QDA Obtaining features for corresponding min MCE
+% Part 2-2a)  Forward Subset Selection - QDA 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % classf = @(xtrain,ytrain,xtest,ytest)sum(~strcmp(ytest,classify(xtest,xtrain,ytrain,'quadratic')));
 % fun1 = @(XT,yT,Xt,yt) sum(~strcmp(yt, predict((fitcdiscr(XT,yT,'DiscrimType','Quadratic')),Xt)))
-
-fun = @(XT,yT,Xt,yt)loss(fitcdiscr(XT,yT,'DiscrimType','Quadratic'),Xt,yt)
+fprintf('\n***************** Forward Subset Selection QDA *****************')
+fun = @(XT,yT,Xt,yt)loss(fitcdiscr(XT,yT,'DiscrimType','Quadratic'),Xt,yt);
 
 FivefoldCVP = cvpartition(Y_train,'kfold',5);
 opts = statset('Display','iter');
@@ -380,7 +371,7 @@ opts = statset('Display','iter');
 
 % Forward Subset Selection - Using cross Validation
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-disp('Forward Subset Selection QDA')
+
 [fsCVfor30,historyCV] = sequentialfs(fun,X_train_norm,Y_train,'cv',FivefoldCVP,'Nf',30,'options',opts);
 
 figure
@@ -392,12 +383,13 @@ set (gca, 'XTickLabel' , a, 'FontName' , 'Times' , 'fontsize' , 18)
 title('Forward Selection with CV- QDA');
 
 % Finding Minimum CV error
-A = find(historyCV.Crit==min(historyCV.Crit))
-Min_index_A = A(1) % If there are multiple CV error with same min value, we choose the first one
-fsLocal = historyCV.In(Min_index_A,:)
+A = find(historyCV.Crit==min(historyCV.Crit));
+Min_index_A = A(1); % If there are multiple CV error with same min value, we choose the first one
+fsLocal = historyCV.In(Min_index_A,:);
 
 % Calculating the Testing error using the model
 Mdl_FS = fitcdiscr(X_train_norm(:,fsLocal), Y_train,'DiscrimType','Quadratic');
+
 label_FS = predict(Mdl_FS,X_train_norm(:,fsLocal));
 Misclassification_training_FS= sum(~strcmp(Y_train, label_FS))/length(Y_train); % Resubs error
       
@@ -413,10 +405,10 @@ Misclassification_test_FS= sum(~strcmp(Y_test, label_test_FS))/length(Y_test);
 %classf = @(xtrain,ytrain,xtest,ytest)sum(~strcmp(ytest,classify(xtest,xtrain,ytrain,'quadratic')));
 %fun1 = @(XT,yT,Xt,yt) sum(~strcmp(yt, predict((fitcdiscr(XT,yT,'DiscrimType','Quadratic')),Xt)))
 
-fun_svm = @(XT,yT,Xt,yt)loss(fitcsvm(XT,yT),Xt,yt)
+fun_svm = @(XT,yT,Xt,yt)loss(fitcsvm(XT,yT),Xt,yt);
 
 %[fsLocal_svm, history_svm] = sequentialfs(fun_svm,X_train_norm,Y_train,'cv',FivefoldCVP,'options',opts);
-disp('Forward Subset Selection Linear SVM')
+fprintf('\n***************Forward Subset Selection Linear SVM***************')
 [fsCV_svm,historyCV_svm] = sequentialfs(fun_svm,X_train_norm,Y_train,'cv',FivefoldCVP,'Nf',30,'options',opts);
 
 
@@ -429,18 +421,19 @@ set (gca, 'XTickLabel' , a, 'FontName' , 'Times' , 'fontsize' , 18)
 title('Forward Selection with CV - Linear SVM');
 
 % Finding Minimum CV error
-B = find(historyCV_svm.Crit==min(historyCV_svm.Crit))
-Min_index_B = B(1) % If there are multiple CV error with same min value, we choose the first one
-fsLocal_svm = historyCV_svm.In(Min_index_B,:)
+B = find(historyCV_svm.Crit==min(historyCV_svm.Crit));
+Min_index_B = B(1); % If there are multiple CV error with same min value, we choose the first one
+fsLocal_svm = historyCV_svm.In(Min_index_B,:);
 
 
 % Calculating the Testing error using the model
 Mdl_FS_svm = fitcsvm(X_train_norm(:,fsLocal_svm), Y_train,'KernelFunction','linear');
+
 label_FS = predict(Mdl_FS_svm,X_train_norm(:,fsLocal_svm));
-Misclassification_training_FS_svm= sum(~strcmp(Y_train, label_FS))/length(Y_train) % Resubs error
+Misclassification_training_FS_svm= sum(~strcmp(Y_train, label_FS))/length(Y_train); % Resubs error
       
 label_test_FS = predict(Mdl_FS_svm,X_test_norm(:,fsLocal_svm));
-Misclassification_test_FS_svm = sum(~strcmp(Y_test, label_test_FS))/length(Y_test)
+Misclassification_test_FS_svm = sum(~strcmp(Y_test, label_test_FS))/length(Y_test);
 
 
 %{
@@ -461,11 +454,11 @@ hold off
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %classf = @(xtrain,ytrain,xtest,ytest)sum(~strcmp(ytest,classify(xtest,xtrain,ytrain,'quadratic')));
 %fun1 = @(XT,yT,Xt,yt) sum(~strcmp(yt, predict((fitcdiscr(XT,yT,'DiscrimType','Quadratic')),Xt)))
-
+fprintf('\n************** Forward Subset Selection Gaussian SVM **************')
 fun_svm = @(XT,yT,Xt,yt)loss(fitcsvm(XT,yT,'KernelFunction','gaussian'),Xt,yt)
 
 %[fsLocal_svm_Gaussian, history_svm_Gaussian] = sequentialfs(fun_svm,X_train_norm,Y_train,'cv',FivefoldCVP,'options',opts);
-disp('Forward Subset Selection Gaussian SVM')
+
 [fsCV_svm_Gaussian,historyCV_svm_Gaussian] = sequentialfs(fun_svm,X_train_norm,Y_train,'cv',FivefoldCVP,'Nf',30,'options',opts);
 
 
@@ -488,25 +481,26 @@ fsLocal_svm_Gaussian = historyCV_svm_Gaussian.In(Min_index_C,:)
 % Calculating the Testing error using the model
 Mdl_FS_svm_gaussian = fitcsvm(X_train_norm(:,fsLocal_svm_Gaussian), Y_train,'KernelFunction','gaussian');
 label_FS = predict(Mdl_FS_svm_gaussian,X_train_norm(:,fsLocal_svm_Gaussian));
-Misclassification_training_FS_svm_gaussian= sum(~strcmp(Y_train, label_FS))/length(Y_train) % Resubs error
+Misclassification_training_FS_svm_gaussian= sum(~strcmp(Y_train, label_FS))/length(Y_train); % Resubs error
       
 label_test_FS = predict(Mdl_FS_svm_gaussian,X_test_norm(:,fsLocal_svm_Gaussian));
-Misclassification_test_FS_svm_gaussian = sum(~strcmp(Y_test, label_test_FS))/length(Y_test)
+Misclassification_test_FS_svm_gaussian = sum(~strcmp(Y_test, label_test_FS))/length(Y_test);
 
 
 % Compairing Models
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-Accuracy_testing_FS_Models = [(1-Misclassification_test_FS),(1-Misclassification_test_FS_svm),(1-Misclassification_test_FS_svm_gaussian)]
-Acc_without_FS = [QDA_Accuracy_test,Linear_SVM_Accuracy_test,Gaussian_SVM_Accuracy_test]
+Accuracy_testing_FS_Models = [(1-Misclassification_test_FS),(1-Misclassification_test_FS_svm),(1-Misclassification_test_FS_svm_gaussian)];
+Acc_without_FS = [QDA_Accuracy_test,Linear_SVM_Accuracy_test,Gaussian_SVM_Accuracy_test];
 
-Acc_comp_FS = [Accuracy_testing_FS_Models',Acc_without_FS']
+Acc_comp_FS = [Accuracy_testing_FS_Models',Acc_without_FS'];
+
 figure
 bar(Acc_comp_FS)
 ylim([0.9 1.02])
 xticklabels({'QDA','Linear SVM','Gaussian SVM'})
-legend({'Forward Selection','All Features'},'location','best','FontSize',18)
+legend({'Forward Selection','All Features'},'location','best','FontSize',14)
 a = get (gca, 'XTickLabel' );
-set (gca, 'XTickLabel' , a, 'FontName' , 'Georgia' , 'fontsize' , 18)
+set (gca, 'XTickLabel' , a, 'FontName' , 'Georgia' , 'fontsize' , 14)
 title('Prediction Accuracy comparison - Forward Selection vs All features')
 
 
@@ -515,7 +509,7 @@ title('Prediction Accuracy comparison - Forward Selection vs All features')
 % Part 3 - Feature Selection and Model Training
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
+fprintf('\n******************** Running Part 3 ********************')
 % Doing PCA Analysis
 % Finding the variability explained by the Principal Components 
 [wcoeff_PCA,score_PCA,latent_PCA,tsquared_PCA,explained_PCA] = pca(X_train_norm,'VariableWeights','variance');
@@ -541,7 +535,7 @@ ylabel('Variance Explained (%)')
 [Y_fit_LDA_PCA,score_LDA_PCA] = LDAtrainedClassifier_PCA.predictFcn(X_test_norm);
 [X1_LDA_PCA,Y1_LDA_PCA,T1_LDA_PCA,AUC1_LDA_PCA] = perfcurve(Y_test,score_LDA_PCA(:,2),'M');
 
-LDA_Accuracy_test_PCA = sum(strcmp(Y_test, Y_fit_LDA_PCA))/length(Y_test)
+LDA_Accuracy_test_PCA = sum(strcmp(Y_test, Y_fit_LDA_PCA))/length(Y_test);
 
 
 
@@ -557,7 +551,7 @@ LDA_Accuracy_test_PCA = sum(strcmp(Y_test, Y_fit_LDA_PCA))/length(Y_test)
 [Y_fit_QDA_PCA,score_QDA_PCA] = QDAtrainedClassifier_PCA.predictFcn(X_test_norm);
 [X1_QDA_PCA,Y1_QDA_PCA,T1_QDA_PCA,AUC1_QDA_PCA] = perfcurve(Y_test,score_QDA_PCA(:,2),'M');
 
-QDA_Accuracy_test_PCA = sum(strcmp(Y_test, Y_fit_QDA_PCA))/length(Y_test)
+QDA_Accuracy_test_PCA = sum(strcmp(Y_test, Y_fit_QDA_PCA))/length(Y_test);
 
 
 
@@ -574,7 +568,7 @@ QDA_Accuracy_test_PCA = sum(strcmp(Y_test, Y_fit_QDA_PCA))/length(Y_test)
 [Y_fit_GNB_PCA,score_GNB_PCA]= GNBtrainedClassifier_PCA.predictFcn(X_test_norm);
 [X1_GNB_PCA,Y1_GNB_PCA,T1_GNB_PCA,AUC1_GNB_PCA] = perfcurve(Y_test,score_GNB_PCA(:,2),'M');
 
-GNB_Accuracy_test_PCA = sum(strcmp(Y_test, Y_fit_GNB_PCA))/length(Y_test)
+GNB_Accuracy_test_PCA = sum(strcmp(Y_test, Y_fit_GNB_PCA))/length(Y_test);
 
 
 
@@ -591,7 +585,7 @@ GNB_Accuracy_test_PCA = sum(strcmp(Y_test, Y_fit_GNB_PCA))/length(Y_test)
 [Y_fit_Logistic_PCA,score_Logistic_PCA] = LogistictrainedClassifier_PCA.predictFcn(X_test_norm);
 [X1_Logistic_PCA,Y1_Logistic_PCA,T1_Logistic_PCA,AUC1_Logistic_PCA] = perfcurve(Y_test,score_Logistic_PCA(:,2),'M');
 
-Logistic_Accuracy_test_PCA = sum(strcmp(Y_test, Y_fit_Logistic_PCA))/length(Y_test)
+Logistic_Accuracy_test_PCA = sum(strcmp(Y_test, Y_fit_Logistic_PCA))/length(Y_test);
 
 
 
@@ -608,7 +602,7 @@ Logistic_Accuracy_test_PCA = sum(strcmp(Y_test, Y_fit_Logistic_PCA))/length(Y_te
 [Y_fit_Linear_SVM_PCA, score_Linear_SVM_PCA] = Linear_SVMtrainedClassifier_PCA.predictFcn(X_test_norm);
 [X1_Linear_SVM_PCA,Y1_Linear_SVM_PCA,T1_Linear_SVM_PCA,AUC1_Linear_SVM_PCA] = perfcurve(Y_test,score_Linear_SVM_PCA(:,2),'M');
 
-Linear_SVM_Accuracy_test_PCA = sum(strcmp(Y_test, Y_fit_Linear_SVM_PCA))/length(Y_test)
+Linear_SVM_Accuracy_test_PCA = sum(strcmp(Y_test, Y_fit_Linear_SVM_PCA))/length(Y_test);
 
 
 
@@ -625,7 +619,7 @@ Linear_SVM_Accuracy_test_PCA = sum(strcmp(Y_test, Y_fit_Linear_SVM_PCA))/length(
 [Y_fit_Quadratic_SVM_PCA,score_Quadratic_SVM_PCA] = Quadratic_SVMtrainedClassifier_PCA.predictFcn(X_test_norm);
 [X1_Quadratic_SVM_PCA,Y1_Quadratic_SVM_PCA,T1_Quadratic_SVM_PCA,AUC1_Quadratic_SVM_PCA] = perfcurve(Y_test,score_Quadratic_SVM_PCA(:,2),'M');
 
-Quadratic_SVM_Accuracy_test_PCA = sum(strcmp(Y_test, Y_fit_Quadratic_SVM_PCA))/length(Y_test)
+Quadratic_SVM_Accuracy_test_PCA = sum(strcmp(Y_test, Y_fit_Quadratic_SVM_PCA))/length(Y_test);
 
 
 
@@ -642,7 +636,7 @@ Quadratic_SVM_Accuracy_test_PCA = sum(strcmp(Y_test, Y_fit_Quadratic_SVM_PCA))/l
 [Y_fit_Gaussian_SVM_PCA,score_Gaussian_SVM_PCA] = Gaussian_SVM_trainedClassifier_PCA.predictFcn(X_test_norm);
 [X1_Gaussian_SVM_PCA,Y1_Gaussian_SVM_PCA,T1_Gaussian_SVM_PCA,AUC1_Gaussian_SVM_PCA] = perfcurve(Y_test,score_Gaussian_SVM_PCA(:,2),'M');
 
-Gaussian_SVM_Accuracy_test_PCA = sum(strcmp(Y_test, Y_fit_Gaussian_SVM_PCA))/length(Y_test)
+Gaussian_SVM_Accuracy_test_PCA = sum(strcmp(Y_test, Y_fit_Gaussian_SVM_PCA))/length(Y_test);
 
 
 
@@ -660,10 +654,10 @@ Gaussian_SVM_Accuracy_test_PCA = sum(strcmp(Y_test, Y_fit_Gaussian_SVM_PCA))/len
 [Y_fit_Ctree_PCA,score_Ctree_PCA]= CTreetrainedClassifier_PCA.predictFcn(X_test_norm);
 [X1_Ctree_PCA,Y1_Ctree_PCA,T1_Ctree_PCA,AUC1_Ctree_PCA] = perfcurve(Y_test,score_Ctree_PCA(:,2),'M');
 
-Ctree_Accuracy_test_PCA = sum(strcmp(Y_test, Y_fit_Ctree_PCA))/length(Y_test)
+Ctree_Accuracy_test_PCA = sum(strcmp(Y_test, Y_fit_Ctree_PCA))/length(Y_test);
 
 
-view(CTreetrainedClassifier_PCA.ClassificationTree,'Mode','graph')
+%view(CTreetrainedClassifier_PCA.ClassificationTree,'Mode','graph')
 
 
 
@@ -680,7 +674,7 @@ view(CTreetrainedClassifier_PCA.ClassificationTree,'Mode','graph')
 [Y_fit_RForest_PCA,score_RForest_PCA]= RForest_trainedClassifier_PCA.predictFcn(X_test_norm);
 [X1_RForest_PCA,Y1_RForest_PCA,T1_RForest_PCA,AUC1_RForest_PCA] = perfcurve(Y_test,score_RForest_PCA(:,2),'M');
 
-RForest_Accuracy_test_PCA = sum(strcmp(Y_test, Y_fit_RForest_PCA))/length(Y_test)
+RForest_Accuracy_test_PCA = sum(strcmp(Y_test, Y_fit_RForest_PCA))/length(Y_test);
 
 
 
@@ -688,7 +682,7 @@ RForest_Accuracy_test_PCA = sum(strcmp(Y_test, Y_fit_RForest_PCA))/length(Y_test
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Comapiring Results with Principal Components
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-Model_names= {'LDA', 'QDA', 'GNB', 'Logistic', 'Linear SVM', 'Quadratic SVM','Gaussian SVM','Ctree','RForest'}
+Model_names= {'LDA', 'QDA', 'GNB', 'Logistic', 'Linear SVM', 'Quadratic SVM','Gaussian SVM','Ctree','RForest'};
 
 % Compairing Accuracy
 Accuracy_Training_PCA = [LDA_Accuracy_PCA,QDA_Accuracy_PCA,GNB_Accuracy_PCA, Logistic_Accuracy_PCA,Linear_SVM_Accuracy_PCA,Quadratic_SVM_Accuracy_PCA,Gaussian_SVM_Accuracy_PCA,CTreeAccuracy_PCA,RForest_Accuracy_PCA];
@@ -698,11 +692,11 @@ Table_Accuracy_PCA = [Accuracy_Training_PCA; Accuracy_Testing_PCA];
 Table3 = array2table(Table_Accuracy_PCA,'VariableNames',Model_names,'RowNames',{'Training Data - PCA','Testing Data - PCA'})
 
 % Compairing Area Under the Curve
-AUC2_Training_data_PCA = [AUC2_LDA_PCA, AUC2_QDA_PCA, AUC2_GNB_PCA, AUC2_Logistic_PCA, AUC2_Linear_SVM_PCA, AUC2_Quadratic_SVM_PCA,AUC2_Gaussian_SVM_PCA,AUC2_Ctree_PCA,AUC2_RForest_PCA]
-AUC1_Testing_data_PCA = [AUC1_LDA_PCA, AUC1_QDA_PCA, AUC1_GNB_PCA, AUC1_Logistic_PCA, AUC1_Linear_SVM_PCA, AUC1_Quadratic_SVM_PCA,AUC1_Gaussian_SVM_PCA,AUC1_Ctree_PCA,AUC1_RForest_PCA]
+AUC2_Training_data_PCA = [AUC2_LDA_PCA, AUC2_QDA_PCA, AUC2_GNB_PCA, AUC2_Logistic_PCA, AUC2_Linear_SVM_PCA, AUC2_Quadratic_SVM_PCA,AUC2_Gaussian_SVM_PCA,AUC2_Ctree_PCA,AUC2_RForest_PCA];
+AUC1_Testing_data_PCA = [AUC1_LDA_PCA, AUC1_QDA_PCA, AUC1_GNB_PCA, AUC1_Logistic_PCA, AUC1_Linear_SVM_PCA, AUC1_Quadratic_SVM_PCA,AUC1_Gaussian_SVM_PCA,AUC1_Ctree_PCA,AUC1_RForest_PCA];
 
 
-Area_Under_Curve_Table_PCA = [AUC2_Training_data_PCA;AUC1_Testing_data_PCA]
+Area_Under_Curve_Table_PCA = [AUC2_Training_data_PCA;AUC1_Testing_data_PCA];
 Table4 = array2table(Area_Under_Curve_Table_PCA,'VariableNames',Model_names,'RowNames',{'Training Data - PCA','Testing Data - PCA'})
 
 % Plotting for Accuracy - for Training Data
@@ -733,10 +727,11 @@ title('Accuracy - Out of Sample Data - Using PCA')
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Part 4 PartA - Hyper Parameter Optimization
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+fprintf('\n******************** Running Part 4 ********************')
 
  %Hyper parameter Optimization
  %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-hypopts = struct('ShowPlots',false,'Verbose',0) %,'UseParallel',true);
+hypopts = struct('ShowPlots',false,'Verbose',0); %
 
 % For Polynomial SVM
 mdls_SVM_opt = fitcsvm(X_train_norm,Y_train,'KernelFunction','linear','Standardize','on', ...
@@ -838,7 +833,7 @@ ylabel('True Positive Rate')
 [Y_fit_Linear_SVM_PCA_Opt, score_Linear_SVM_PCA_Opt] = Linear_SVMtrainedClassifier_PCA_Opt.predictFcn(X_test_norm);
 [X1_Linear_SVM_PCA_Opt,Y1_Linear_SVM_PCA_Opt,T1_Linear_SVM_PCA_Opt,AUC1_Linear_SVM_PCA_Opt] = perfcurve(Y_test,score_Linear_SVM_PCA_Opt(:,2),'M');
 
-Linear_SVM_Accuracy_test_PCA_Opt = sum(strcmp(Y_test, Y_fit_Linear_SVM_PCA_Opt))/length(Y_test)
+Linear_SVM_Accuracy_test_PCA_Opt = sum(strcmp(Y_test, Y_fit_Linear_SVM_PCA_Opt))/length(Y_test);
 
 
 
@@ -855,7 +850,7 @@ Linear_SVM_Accuracy_test_PCA_Opt = sum(strcmp(Y_test, Y_fit_Linear_SVM_PCA_Opt))
 [Y_fit_Gaussian_SVM_PCA_Opt,score_Gaussian_SVM_PCA_Opt] = Gaussian_SVM_trainedClassifier_PCA_Opt.predictFcn(X_test_norm);
 [X1_Gaussian_SVM_PCA_Opt,Y1_Gaussian_SVM_PCA_Opt,T1_Gaussian_SVM_PCA_Opt,AUC1_Gaussian_SVM_PCA_Opt] = perfcurve(Y_test,score_Gaussian_SVM_PCA_Opt(:,2),'M');
 
-Gaussian_SVM_Accuracy_test_PCA_Opt = sum(strcmp(Y_test, Y_fit_Gaussian_SVM_PCA_Opt))/length(Y_test)
+Gaussian_SVM_Accuracy_test_PCA_Opt = sum(strcmp(Y_test, Y_fit_Gaussian_SVM_PCA_Opt))/length(Y_test);
 
 
 
@@ -875,10 +870,10 @@ Gaussian_SVM_Accuracy_test_PCA_Opt = sum(strcmp(Y_test, Y_fit_Gaussian_SVM_PCA_O
 [Y_fit_Ctree_PCA_Opt,score_Ctree_PCA_Opt]= CTreetrainedClassifier_PCA_Opt.predictFcn(X_test_norm);
 [X1_Ctree_PCA_Opt,Y1_Ctree_PCA_Opt,T1_Ctree_PCA_Opt,AUC1_Ctree_PCA_Opt] = perfcurve(Y_test,score_Ctree_PCA_Opt(:,2),'M');
 
-Ctree_Accuracy_test_PCA_Opt = sum(strcmp(Y_test, Y_fit_Ctree_PCA_Opt))/length(Y_test)
+Ctree_Accuracy_test_PCA_Opt = sum(strcmp(Y_test, Y_fit_Ctree_PCA_Opt))/length(Y_test);
 
 
-view(CTreetrainedClassifier_PCA_Opt.ClassificationTree,'Mode','graph')
+% view(CTreetrainedClassifier_PCA_Opt.ClassificationTree,'Mode','graph')
 
 
 
@@ -886,7 +881,7 @@ view(CTreetrainedClassifier_PCA_Opt.ClassificationTree,'Mode','graph')
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 % Accuracy
-Accuracy_PCA_Opt = [Linear_SVM_Accuracy_test_PCA_Opt,Ctree_Accuracy_test_PCA_Opt,Gaussian_SVM_Accuracy_test_PCA_Opt]
+Accuracy_PCA_Opt = [Linear_SVM_Accuracy_test_PCA_Opt,Ctree_Accuracy_test_PCA_Opt,Gaussian_SVM_Accuracy_test_PCA_Opt];
 
 
 % Confusion Matrix
