@@ -902,6 +902,31 @@ c_svm_gaussian_opt_PCA = confusionchart(Y_test,Y_fit_Gaussian_SVM_PCA_Opt);
 title(names_Model{3})
 
 
+
+
+%{
+[idx,scores] = fscchi2(X_train_norm,Y_train);
+
+tree=fitctree(X_train_norm,Y_train);
+
+
+view(tree,'Mode','graph');
+
+
+
+imp=predictorImportance(tree);
+[r,ind_imp]=sort(imp, 'descend');
+index_zero=find(imp==0);
+
+
+
+data_train =[Y_train, X_train_norm];
+Y_pred_tree=predict(tree, X_test_norm);
+confusionchart(Y_test, Y_pred_tree);
+C=confusionmat(Y_test,Y_pred_tree);
+%Accuracy=(TN+TP)/(TN+TP+FN+FP)
+accuracy_ctree=(C(1,1)+C(2,2))/length(Y_test);
+%}
 %}
 
 
