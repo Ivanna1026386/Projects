@@ -2,8 +2,8 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 AEML - Course Project
 Submitted by -
- - Vivek Bhargava (01/1025699)
- - Ivanna Savonik (01/1026386)
+ - Vivek Bhargava 
+ - Ivanna Savonik 
 
 No. of functions used -
 - We have used a total of 23 functions and their .m scripts are attached
